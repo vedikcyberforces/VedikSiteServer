@@ -9,14 +9,15 @@ mongoose.connect(connectionString, {
     useUnifiedTopology: true
 }).then(() => console.log("Connected")).catch((err) => console.log(err))
 
-
 const Member = mongoose.model("Member", schemas.memberSchema)
 
 
-const insertMember = async (name, password)=>{
-    const member = Member({name:name, password: md5(password)})
+const insertMember = async (name, password) => {
+    const member = Member({
+        name: name,
+        password: md5(password)
+    })
     console.log(member)
-    const result = await member.save() 
+    const result = await member.save()
     console.log(result)
 }
-
