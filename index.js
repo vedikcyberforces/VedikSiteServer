@@ -3,6 +3,7 @@ const cors = require("cors")
 const mongoose = require("mongoose")
 const API = require("./apiRouter")
 const AUTH = require("./authRouter")
+const { response } = require("express")
 
 const app = express();
 
@@ -17,7 +18,7 @@ app.use(express.urlencoded({
 
 app.use(cors())
 app.use("/api", API)
-app.use("/auth", AUTH)
+app.use("/auth", AUTH, (req, res)=>{console.log("response came")})
 const connectionString = "mongodb://vediksite:bvNszPLnnofrskDBiZebVVsU8M7rKonhQa1eP2miK9HbjqVI1dxhqWcE5GqiiX0O1vILpRPmbjeS0d9vRNqw2A==@vediksite.mongo.cosmos.azure.com:10255/?ssl=true&retrywrites=false&replicaSet=globaldb&maxIdleTimeMS=120000&appName=@vediksite@";
 mongoose.connect(connectionString, {
     useNewUrlParser: true,

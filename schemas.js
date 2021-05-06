@@ -29,6 +29,10 @@ const memberRequestSchema = mongoose.Schema({
         required: true,
         trim: true,
     },
+    terms: {
+        type: Boolean,
+        required: true,
+    },
     time: {
         type: Date,
         default: Date.now
@@ -67,6 +71,11 @@ const memberSchema = mongoose.Schema({
         type: String,
         required: true,
         trim: true,
+    },
+    role:{
+        type:String,
+        required:true,
+        trim:true
     },
     time: {
         type: Date,
