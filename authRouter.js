@@ -22,7 +22,7 @@ AuthRouter.route("/join")
         console.log(req.body)
         const member = new MemberRequestModal({
             "firstname": req.body.firstname,
-            "lastname": req.body.firstname,
+            "lastname": req.body.lastname,
             "email": req.body.email,
             "phone": req.body.phone,
             "username": req.body.username,
