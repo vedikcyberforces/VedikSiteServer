@@ -1,8 +1,63 @@
 const mongoose = require("mongoose")
 const timezone = require("moment-timezone")
 
-//Member Schema
+//Member Requests
+const memberRequestSchema = mongoose.Schema({
+
+    firstname: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    lastname: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    email: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    phone: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    username: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    time: {
+        type: Date,
+        default: Date.now
+    }
+})
+
+// Member Schema
 const memberSchema = mongoose.Schema({
+
+    firstname: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    lastname: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    email: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    phone: {
+        type: String,
+        required: true,
+        trim: true,
+    },
     username: {
         type: String,
         required: true,
@@ -10,7 +65,8 @@ const memberSchema = mongoose.Schema({
     },
     password: {
         type: String,
-        required: true
+        required: true,
+        trim: true,
     },
     time: {
         type: Date,
@@ -36,5 +92,6 @@ const newsSchema = mongoose.Schema({
 
 module.exports = {
     memberSchema,
-    newsSchema
+    newsSchema,
+    memberRequestSchema
 }
