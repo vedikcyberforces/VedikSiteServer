@@ -19,16 +19,20 @@ AuthRouter.route("/login")
 
 AuthRouter.route("/join")
     .post((req, res) => {
+        console.log(req.body)
         const member = new MemberRequestModal({
             "firstname": req.body.firstname,
             "lastname": req.body.firstname,
             "email": req.body.email,
             "phone": req.body.phone,
-            "username": req.body.username
+            "username": req.body.username,
+            "terms": req.body.terms
         })
         if(req.body){
             databaseAccess.insertModel(res, member)
         }
+    }).get((req, res)=>{
+        databaseAccess.getModel(res,MemberRequestModal)
     })
 
 
