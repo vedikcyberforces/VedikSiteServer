@@ -3,7 +3,7 @@ const timezone = require("moment-timezone")
 
 //Member Schema
 const memberSchema = mongoose.Schema({
-    name: {
+    username: {
         type: String,
         required: true,
         trim: true,

@@ -13,12 +13,18 @@ const insertModel = async (res, model) => {
     }
 }
 
-const getModel = async (res, model, options) => {
+const getModel = async (res, model, options, reverse, limit) => {
     try {
-        const newses = await newsModel.find(options);
-        res.status(200).json(newses);
+        const newses = await newsModel.find(options).limit(limit)
+        if(reverse){
+            res.status(200).json(newses.reverse());
+        }
+        else{
+            res.status(200).json(newses);
+        }
     } catch (err) {
         console.log(err);
+        return
     }
 };
 /*
@@ -30,7 +36,7 @@ const newsModel = mongoose.model("News", schemas.newsSchema)
 
 API.route("/news")
     .get((req, res) => {
-        getModel(res, newsModel, {})
+        getModel(res, newsModel, {},true)
     })
     .post((req, res) => {
         try {
