@@ -10,10 +10,9 @@ to news component will be Handled Here
 */
 
 const newsModel = mongoose.model("News", schemas.newsSchema)
-
 API.route("/news")
     .get((req, res) => {
-       newsAPI.getModel(res, newsModel, {},true)
+        newsAPI.getNews(newsModel).then((val) => {res.send(val); console.log(val)});
     })
     .post((req, res) => {
         try {
@@ -24,10 +23,7 @@ API.route("/news")
                     time: req.body.time
                 })
 
-                newsAPI.insertModel(res, news);
-
             }
-
         } catch (err) {
             res.status(400)
             console.log(err)

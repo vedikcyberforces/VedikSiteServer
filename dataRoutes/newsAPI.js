@@ -1,25 +1,24 @@
-
-const insertModel = async (res, model) => {
+const insertNews = async (model) => {
     try {
-        const result = await model.save()
-        res.status(200).json({"data": result})
+        return await model.save()
     } catch (err) {
-        res.status(400).json({"status":"Bad Request", "data": err})
+        return err;
     }
 }
 
-const getModel = async (res, model) => {
+const getNews = async (model) => {
     try {
-        const newses = await model.find();
-        res.send(newses)
+        return result = await model.find().select({news:1}).sort("-news").exec()
     } catch (err) {
-        res.send(err)
+        console.log(err)
     }
 };
 
 const newsAPI = new Object();
 
-newsAPI.insertModel = insertModel;
-newsAPI.getModel = getModel;
 
-module.exports = newsAPI
+
+module.exports = {
+    insertNews,
+    getNews
+}
