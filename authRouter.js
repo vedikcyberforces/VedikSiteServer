@@ -4,7 +4,7 @@ const mongoose = require("mongoose")
 const jwt = require("jsonwebtoken")
 const md5 = require("md5")
 const AuthRouter = express.Router()
-const databaseAccess = require("./databaseAccess")
+const authAPI = require("./dataRoutes/authAPI")
 const MemberModel = mongoose.model("User", schemas.memberSchema)
 const MemberRequestModal = mongoose.model("MemberRequest", schemas.memberRequestSchema)
 
@@ -29,10 +29,10 @@ AuthRouter.route("/join")
             "terms": req.body.terms
         })
         if(req.body){
-            databaseAccess.insertModel(res, member)
+            authAPI.insertModel(res, member)
         }
     }).get((req, res)=>{
-        databaseAccess.getModel(res,MemberRequestModal)
+        authAPI.getModel(res,MemberRequestModal)
     })
 
 

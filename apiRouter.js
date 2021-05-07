@@ -2,8 +2,7 @@ const express = require("express")
 const schemas = require("./schemas")
 const mongoose = require("mongoose")
 const API = express.Router()
-const databaseAccess = require("./databaseAccess")
-
+const newsAPI = require("./dataRoutes/newsAPI")
 
 /*
 News Section All the GET and POST Request related
@@ -11,10 +10,9 @@ to news component will be Handled Here
 */
 
 const newsModel = mongoose.model("News", schemas.newsSchema)
-
 API.route("/news")
     .get((req, res) => {
-       databaseAccess.getModel(res, newsModel, {},true)
+        newsAPI.getNews(newsModel).then((val) => {res.send(val); console.log(val)});
     })
     .post((req, res) => {
         try {
@@ -25,10 +23,7 @@ API.route("/news")
                     time: req.body.time
                 })
 
-                databaseAccess.insertModel(res, news);
-
             }
-
         } catch (err) {
             res.status(400)
             console.log(err)
