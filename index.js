@@ -19,8 +19,8 @@ app.use(express.urlencoded({
 app.use(cors())
 app.use("/api", API)
 app.use("/auth", AUTH, (req, res)=>{console.log("response came")})
-const connectionString = "mongodb+srv://vedik:gPeGHXlbm0GHmI87@cluster0.m01by.mongodb.net/VedikSite?retryWrites=true&w=majority";
-//const connectionString = "mongodb://vediksite:4vdVaj7nddYNG3iGDg0iQc7aTvDuSx2LsjQ1oeGZ9Nx0253Hdb9vYcEEAX8erSRLcBfpmVhq04IFhqqy20iwBQ==@vediksite.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&connect=direct&appName=@vediksite@";
+//const connectionString = "mongodb+srv://vedik:gPeGHXlbm0GHmI87@cluster0.m01by.mongodb.net/VedikSite?retryWrites=true&w=majority";
+const connectionString = "mongodb://vediksite:4vdVaj7nddYNG3iGDg0iQc7aTvDuSx2LsjQ1oeGZ9Nx0253Hdb9vYcEEAX8erSRLcBfpmVhq04IFhqqy20iwBQ==@vediksite.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&connect=direct&appName=@vediksite@";
 mongoose.connect(connectionString, {
     useNewUrlParser: true,
     useUnifiedTopology: true
