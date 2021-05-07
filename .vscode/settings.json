@@ -2,5 +2,7 @@
     "appService.zipIgnorePattern": [
         "node_modules{,/**}",
         ".vscode{,/**}"
-    ]
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/56e09ee7-a7f3-46af-83a7-2a0bb4c479e8/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/vedikserver",
+    "appService.deploySubpath": "."
 }
