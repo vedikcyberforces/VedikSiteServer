@@ -1,5 +1,3 @@
-const schemas = require("./schemas")
-
 const insertModel = async (res, model) => {
     try {
         const result = await model.save()
@@ -23,9 +21,9 @@ const getModel = async (res, model, options, reverse, limit) => {
     }
 };
 
-const databaseAccess = new Object();
+const authAPI = new Object();
 
-databaseAccess.insertModel = insertModel;
-databaseAccess.getModel = getModel;
+authAPI.insertModel = insertModel;
+authAPI.getModel = getModel;
 
-module.exports = databaseAccess
+module.exports = authAPI
