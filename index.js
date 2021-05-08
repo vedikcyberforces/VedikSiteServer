@@ -4,7 +4,7 @@ const mongoose = require("mongoose")
 const API = require("./apiRouter")
 const AUTH = require("./authRouter")
 const { response } = require("express")
-
+const jwt = require("jsonwebtoken");
 const app = express();
 
 
@@ -18,7 +18,7 @@ app.use(express.urlencoded({
 
 app.use(cors())
 app.use("/api", API)
-app.use("/auth", AUTH, (req, res)=>{console.log("response came")})
+app.use("/auth", AUTH)
 //const connectionString = "mongodb+srv://vedik:gPeGHXlbm0GHmI87@cluster0.m01by.mongodb.net/VedikSite?retryWrites=true&w=majority";
 const connectionString = "mongodb://uajzdwzvtbbbvfvswtv9:jxw4FArUsjEtkIRNzQxm@bhjsg7ylqkh73ne-mongodb.services.clever-cloud.com:27017/bhjsg7ylqkh73ne";
 mongoose.connect(connectionString, {

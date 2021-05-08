@@ -1,29 +1,108 @@
-const insertModel = async (res, model) => {
+const jwt = require("jsonwebtoken");
+const Join = async (model) => {
     try {
-        const result = await model.save()
-        res.status(200).json({"data": result})
+        return await model.save()
     } catch (err) {
-        res.status(400).json({"status":"Bad Request", "data": err})
+        return err
     }
 }
 
-const getModel = async (res, model, options, reverse, limit) => {
+const getRequests = async (model) => {
     try {
-        const newses = await model.find(options).limit(limit)
-        if(reverse){
-            res.status(200).json(newses.reverse());
-        }
-        else{
-            res.status(200).json(newses);
-        }
+        return result = await model.find().select({
+            firstname: 1,
+            lastname: 1,
+            id: 1,
+            phone: 1
+        }).exec()
     } catch (err) {
-        console.log(err);
+        console.log(err)
     }
 };
 
-const authAPI = new Object();
+/*
+Function for Jwt Verification
 
-authAPI.insertModel = insertModel;
-authAPI.getModel = getModel;
+Will be called many times for autheticatoin in different routes to determine what to show to the user
+*/
 
-module.exports = authAPI
+const verifyLogin = async (token, secret, model) => {
+    response = false;
+    //return jwt.verify(token, secret)
+    console.log(token);
+    try {
+        //If token is verified than return True else False if will affect the gui login page 
+        jwt.verify(token, secret, {}, (err, payload) => {
+            if (err) {
+                response = false;
+            } else {
+                response = true;
+            }
+
+        })
+        return response;
+
+        // if (data) {
+        //     const result = await model.findOne({
+        //         username: data.username
+        //     }).countDocuments()
+        //     if (result) {
+        //         return true;
+        //     } else {
+        //         return false;
+        //     }
+        // } else {
+        //     return false;
+        // }
+
+    } catch (err) {
+        return false
+    }
+
+}
+
+const Login = async (data, model, secret) => {
+    try {
+        const result = await model.findOne({
+            username: data.username
+        }).exec()
+        if (result != null && Object.keys(result).length > 0) {
+            if (data.rememberMe) {
+                return {
+                    "status": jwt.sign({
+                        "username": result.username,
+                        "role": result.role,
+                        "email": result.email,
+                        "phone": result.phone
+                    }, secret)
+                }
+            } else {
+                return {
+                    "status": jwt.sign({
+                        "username": result.username,
+                        "role": result.role,
+                        "email": result.email,
+                        "phone": result.phone
+                    }, secret, {
+                        expiresIn: '30m'
+                    })
+                }
+            }
+        } else {
+            return {
+                "status": false
+            }
+        }
+    } catch (err) {
+        return {
+            "status": false
+        }
+    }
+};
+
+module.exports = {
+    Login,
+    Join,
+    getRequests,
+    verifyLogin
+}
