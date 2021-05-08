@@ -29,7 +29,6 @@ Will be called many times for autheticatoin in different routes to determine wha
 const verifyLogin = async (token, secret, model) => {
     response = false;
     //return jwt.verify(token, secret)
-    console.log(token);
     try {
         //If token is verified than return True else False if will affect the gui login page 
         jwt.verify(token, secret, {}, (err, payload) => {
