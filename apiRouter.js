@@ -12,7 +12,7 @@ to news component will be Handled Here
 const newsModel = mongoose.model("News", schemas.newsSchema)
 API.route("/news")
     .get((req, res) => {
-        newsAPI.getNews(newsModel).then((val) => {res.send(val); console.log(val)});
+        newsAPI.getNews(newsModel).then((val) => {res.send(val);});
     })
     .post((req, res) => {
         try {
