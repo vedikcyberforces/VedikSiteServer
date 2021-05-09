@@ -4,6 +4,8 @@ const schemas = require("../schemas")
 const ourmail = "aicephotoc@gmail.com";
 
 
+//MAILER TRANSPORT OBJECT FOR MAILING 
+
 const mailer = new nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 587,
@@ -16,9 +18,13 @@ const mailer = new nodemailer.createTransport({
     }
 })
 
+
+
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 const md5 = require("md5");
+
+//JOIN FUNCTION
 
 const Join = async (model) => {
     try {
@@ -28,6 +34,7 @@ const Join = async (model) => {
     }
 }
 
+//MEMBER MODEL
 const memberModel = mongoose.model("Member", schemas.memberSchema);
 
 const getRequests = async (model) => {
@@ -88,20 +95,26 @@ const verifyLogin = async (token, secret, model) => {
 
 }
 
+
+//Login Function 
+
+
 const Login = async (data, model, secret) => {
     try {
-        var count = 0 
+        var count = 0  // cOUNTES THE NUMBER OF DOCUMENT IF GREATER THAN ONE THEN USER EXISTS
         model.findOne({
             username: data.username,
-            password: md5(data.password)
+            password: md5(data.password) //CONVERT THE PASSWORD TO MD5 HASH
         }).countDocuments().exec().then(val=>count=val)
-        console.log(count)
+
+        //GETS IMPORTENT INFO ABOUT THE USER
         const result = await model.findOne({
             username: data.username,
             password: md5(data.password)
         }).exec()
         if (result != null && count > 0) {
             if (data.rememberMe) {
+                //RETURN THE JWT TOKEN TO THE USER
                 return {
                     "status": jwt.sign({
                         "username": result.username,
@@ -134,6 +147,8 @@ const Login = async (data, model, secret) => {
     }
 };
 
+
+//ACCEPT REQUEST FUNCTION
 
 const acceptRequest = async (Userid, model) => {
     try {
@@ -175,12 +190,10 @@ const acceptRequest = async (Userid, model) => {
         }).catch(err => {
             console.log(err)
         })
-
+        //SEND MAIL TO THE MEMBER REQUEST
         mailer.sendMail(mailOptions, function (error, info) {
             if (error) {
                 console.log(error);
-            } else {
-                console.log('Email sent: ' + info.response);
             }
         });
         return (update && saved)
@@ -188,6 +201,9 @@ const acceptRequest = async (Userid, model) => {
         return err
     }
 }
+
+
+//REQUEST REJECTOR JUST UPDATES THE STATUS SO THAT IT WILL NOT BE VISIBLE IN THE ADMIN PANEL
 
 const rejectRequest = async (data, model)=>{
     var update = false
@@ -205,6 +221,8 @@ const rejectRequest = async (data, model)=>{
     return update
 
 }
+
+//ALL FUNCTIONS EXPORTED
 
 module.exports = {
     Login,
