@@ -97,7 +97,7 @@ AuthRouter.route("/join/request")
                                 "status": true
                             })
                         }).catch((err) => {
-                            console.log({
+                            return({
                                 "status": true
                             })
                         })
