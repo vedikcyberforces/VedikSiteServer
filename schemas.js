@@ -6,32 +6,41 @@ const memberRequestSchema = mongoose.Schema({
 
     firstname: {
         type: String,
+        minLength:3,
         required: true,
         trim: true,
     },
     lastname: {
         type: String,
+        minLength:3,
         required: true,
         trim: true,
     },
     email: {
         type: String,
+        minLength:10,
         required: true,
         trim: true,
     },
     phone: {
         type: String,
+        minLength:10,
         required: true,
         trim: true,
     },
     username: {
         type: String,
+        minLength:3,
         required: true,
         trim: true,
     },
     terms: {
         type: Boolean,
         required: true,
+    },
+    status:{
+        type:String,
+        default:"Q" //Q mean this is in The request queue Two more possible values : A - Accepted and R - Rejected 
     },
     time: {
         type: Date,
@@ -74,8 +83,8 @@ const memberSchema = mongoose.Schema({
     },
     role:{
         type:String,
-        required:true,
-        trim:true
+        trim:true,
+        default:"member"
     },
     time: {
         type: Date,

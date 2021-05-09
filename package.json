@@ -21,10 +21,12 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "firebase-tools": "^9.10.2",
+    "generate-password": "^1.6.0",
     "jsonwebtoken": "^8.5.1",
     "md5": "^2.3.0",
     "moment-timezone": "^0.5.33",
-    "mongoose": "^5.12.7"
+    "mongoose": "^5.12.7",
+    "nodemailer": "^6.6.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"

@@ -15,7 +15,6 @@ app.use(express.urlencoded({
   extended: true
 }));
 
-
 app.use(cors())
 app.use("/api", API)
 app.use("/auth", AUTH)
@@ -26,7 +25,6 @@ mongoose.connect(connectionString, {
     useUnifiedTopology: true
 }).then(() => console.log("Connected")).catch((err) => console.log(err))
 app.listen(port, ()=>console.log("Listening On Port", port))
-
 
 // const insertMember = async (name, password) => {
 //     const member = Member({
