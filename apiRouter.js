@@ -3,6 +3,10 @@ const schemas = require("./schemas")
 const mongoose = require("mongoose")
 const API = express.Router()
 const newsAPI = require("./dataRoutes/newsAPI")
+const memberApi = require("./dataRoutes/memberAPI")
+
+const MemberModal = mongoose.model("Member", schemas.memberSchema)
+
 
 /*
 News Section All the GET and POST Request related
@@ -29,6 +33,12 @@ API.route("/news")
             console.log(err)
         }
     })
+
+
+API.get("/member", (req, res)=>{
+    memberApi.getMember(MemberModal).then((val)=>{res.send(val)}).catch((err)=>{console.log(err)})
+})
+
 
 /*
 End Of News Secion
