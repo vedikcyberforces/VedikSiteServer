@@ -89,6 +89,14 @@ const memberSchema = mongoose.Schema({
     time: {
         type: Date,
         default: Date.now
+    },
+    about: {
+        type:String,
+        default:""
+    },
+    avatar_url: {
+        type:String,
+        default:"assets/avatar.png"
     }
 })
 
