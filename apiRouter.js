@@ -5,6 +5,7 @@ const API = express.Router()
 const newsAPI = require("./dataRoutes/newsAPI")
 const memberApi = require("./dataRoutes/memberAPI")
 const ProfileAPI = require("./dataRoutes/profileAPI")
+mongoose.set('useFindAndModify', false);
 
 const MemberModal = mongoose.model("Member", schemas.memberSchema)
 
