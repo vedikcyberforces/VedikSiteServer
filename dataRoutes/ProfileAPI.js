@@ -30,7 +30,6 @@ const getProfile = async (model, username) => {
     }
 };
 
-const newsAPI = new Object();
 
 
 

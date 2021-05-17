@@ -124,8 +124,44 @@ const newsSchema = mongoose.Schema({
     }
 })
 
+//Projects Schema
+const projectsSchema = mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    about: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    images: {
+        type: String,
+        required: true
+    },
+    icon: {
+        type: String,
+        required: true
+    },
+    developer: {
+        type: String,
+        required: true
+    },
+    title: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    time: {
+        type: Date,
+        default: Date.now
+    }
+})
+
 module.exports = {
     memberSchema,
     newsSchema,
-    memberRequestSchema
+    memberRequestSchema,
+    projectsSchema
 }
