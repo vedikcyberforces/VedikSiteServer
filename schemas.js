@@ -97,6 +97,14 @@ const memberSchema = mongoose.Schema({
     avatar_url: {
         type:String,
         default:"assets/avatar.png"
+    },
+    title: {
+        type:String,
+        default:""
+    },
+    tools: {
+        type:String,
+        default:""
     }
 })
 
