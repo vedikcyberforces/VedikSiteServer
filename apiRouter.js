@@ -7,6 +7,9 @@ const memberApi = require("./dataRoutes/memberAPI")
 const ProfileAPI = require("./dataRoutes/profileAPI")
 const ProjectsAPI = require("./dataRoutes/projectsAPI")
 
+mongoose.set('useFindAndModify', false);
+
+
 const MemberModal = mongoose.model("Member", schemas.memberSchema)
 const projectsModal = mongoose.model("Projects", schemas.projectsSchema)
 
