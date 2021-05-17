@@ -4,6 +4,7 @@ const mongoose = require("mongoose")
 const API = express.Router()
 const newsAPI = require("./dataRoutes/newsAPI")
 const memberApi = require("./dataRoutes/memberAPI")
+const ProfileAPI = require("./dataRoutes/profileAPI")
 
 const MemberModal = mongoose.model("Member", schemas.memberSchema)
 
@@ -33,15 +34,47 @@ API.route("/news")
             console.log(err)
         }
     })
+/*
+End Of News Secion
+*/
 
+/*
+Profile Section All POST related 
+to members component will be Handled Here
+*/
 
 API.get("/member", (req, res)=>{
     memberApi.getMember(MemberModal).then((val)=>{res.send(val)}).catch((err)=>{console.log(err)})
 })
 
+/*
+End of Member Section
+*/
+
+
 
 /*
-End Of News Secion
+Profile Section All GET and POST related 
+to profile component will be Handled Here
 */
+API.route('/profile')
+        .get( (req, res) => {
+            ProfileAPI.getProfile(MemberModal, req.query.username).then((val) => {res.send(val);})
+        })
+        .post( async (req, res) => {
+            try{
+                if(req.body != null)
+                {
+                    ProfileAPI.updateProfile(MemberModal, req.body, req.query.username).then((val) =>{res.send(val)});
+                }
+            } catch(err){
+                res.status(400)
+                console.log(err)
+            }
+        })
+
+/*
+End of Profile Section
+ */
 
 module.exports = API
