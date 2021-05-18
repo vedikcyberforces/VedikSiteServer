@@ -182,10 +182,23 @@ const postSchema = mongoose.Schema({
     }
 })
 
+//Art Gallery Schema
+const artSchema = mongoose.Schema({
+    image : {
+        type: String,
+        required: true,
+    },
+    time : {
+        type: Date,
+        default: Date.now
+    }
+})
+
 module.exports = {
     memberSchema,
     newsSchema,
     memberRequestSchema,
     projectsSchema,
-    postSchema
+    postSchema,
+    artSchema
 }

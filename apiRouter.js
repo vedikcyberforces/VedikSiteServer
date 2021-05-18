@@ -7,6 +7,16 @@ const memberApi = require("./dataRoutes/memberAPI")
 const ProfileAPI = require("./dataRoutes/profileAPI")
 const ProjectsAPI = require("./dataRoutes/projectsAPI")
 const PostsAPI = require("./dataRoutes/postsAPI")
+const ArtAPI = require("./dataRoutes/artAPI")
+
+
+// const multipart = require('connect-multiparty');
+// const multipartMiddleware = multipart({
+//     storage: 'vedik'
+// });
+
+// var azure = require('azure-storage');
+// var blobStorage = azure.createBlobService("DefaultEndpointsProtocol=https;AccountName=vedikstorage;AccountKey=7OmeGweYiFuBYd+/nzBAj3chFHo0vycwFc95s2yfbYpDOEbVPEnHY1lI5KWZms2G7O1//8F1JmGt2jcueom8jg==;EndpointSuffix=core.windows.net");
 
 mongoose.set('useFindAndModify', false);
 
@@ -14,6 +24,7 @@ mongoose.set('useFindAndModify', false);
 const MemberModal = mongoose.model("Member", schemas.memberSchema)
 const projectsModal = mongoose.model("Projects", schemas.projectsSchema)
 const postsModal = mongoose.model("Posts", schemas.postSchema)
+const artModal = mongoose.model("Articles", schemas.artSchema)
 
 
 /*
@@ -148,7 +159,7 @@ End of Project Section
 
 /*
 Post Section All GET and POST related 
-to profile component will be Handled Here
+to post component will be Handled Here
  */
 
 API.route('/posts')
@@ -171,7 +182,7 @@ API.route('/posts')
 
                     PostsAPI.insertPost(post).then((val) => {res.send(val)}).catch((err) => {console.error(err)})
 
-                    // To Delete the Projects
+                    // To Delete the Post
                     // postsModal.findOneAndDelete({_id: req.query.id}, (err, object) => {
                     //     if(err)
                     //     {
@@ -192,6 +203,54 @@ API.route('/posts')
 
 /*
 End of Post Section
+ */
+
+
+
+/*
+Art Section All GET and POST related 
+to Art Gallery component will be Handled Here
+ */
+
+API.route('/art')
+        .get( (req, res) => {
+
+            ArtAPI.getArt(artModal).then((val) => {res.send(val)}).catch((err) => {console.error(err)})
+            
+        })
+        .post( (req, res) => {
+            try {
+                if(req.body != null)
+                {
+                    //To add the art
+                    const art = new artModal({
+                        image : req.body.image,
+                        time : req.body.time
+                    })
+
+                    ArtAPI.insertArt(art).then((val) => {res.send(val)}).catch((err) => {console.error(err)})
+
+                    // To Delete the Art
+                    // artModal.findOneAndDelete({_id: req.query.id}, (err, object) => {
+                    //     if(err)
+                    //     {
+                    //         res.status(400)
+                    //     }
+                    //     else{
+                    //         res.json(object)
+                    //     }
+                    // })
+
+                }
+
+            } catch (err) {
+                res.status(400)
+                console.error(err)
+            }
+        })
+
+/*
+End of Art Section
  */
 
 
