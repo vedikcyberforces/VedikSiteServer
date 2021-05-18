@@ -6,12 +6,14 @@ const newsAPI = require("./dataRoutes/newsAPI")
 const memberApi = require("./dataRoutes/memberAPI")
 const ProfileAPI = require("./dataRoutes/profileAPI")
 const ProjectsAPI = require("./dataRoutes/projectsAPI")
+const PostsAPI = require("./dataRoutes/postsAPI")
 
 mongoose.set('useFindAndModify', false);
 
 
 const MemberModal = mongoose.model("Member", schemas.memberSchema)
 const projectsModal = mongoose.model("Projects", schemas.projectsSchema)
+const postsModal = mongoose.model("Posts", schemas.postSchema)
 
 
 /*
@@ -141,5 +143,56 @@ API.route('/projects')
 /*
 End of Project Section
  */
+
+
+
+/*
+Post Section All GET and POST related 
+to profile component will be Handled Here
+ */
+
+API.route('/posts')
+        .get( (req, res) => {
+
+            PostsAPI.getPost(postsModal).then((val) => {res.send(val)}).catch((err) => {console.error(err)})
+            
+        })
+        .post( (req, res) => {
+            try {
+                if(req.body != null)
+                {
+                    // //To add the post
+                    const post = new postsModal({
+                        title : req.body.title,
+                        content : req.body.content,
+                        by : req.body.username,
+                        time : req.body.time
+                    })
+
+                    PostsAPI.insertPost(post).then((val) => {res.send(val)}).catch((err) => {console.error(err)})
+
+                    // To Delete the Projects
+                    // postsModal.findOneAndDelete({_id: req.query.id}, (err, object) => {
+                    //     if(err)
+                    //     {
+                    //         res.status(400)
+                    //     }
+                    //     else{
+                    //         res.json(object)
+                    //     }
+                    // })
+
+                }
+
+            } catch (err) {
+                res.status(400)
+                console.error(err)
+            }
+        })
+
+/*
+End of Post Section
+ */
+
 
 module.exports = API

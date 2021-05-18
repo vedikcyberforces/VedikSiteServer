@@ -159,9 +159,33 @@ const projectsSchema = mongoose.Schema({
     }
 })
 
+//Posts Schema
+const postSchema = mongoose.Schema({
+    title : {
+        type: String,
+        required: true,
+        trim: true
+    },
+    content : {
+        type : String,
+        required: true,
+        trim: true
+    },
+    by : {
+        type: String,
+        required: true,
+        trim: true
+    },
+    time : {
+        type: Date,
+        default: Date.now
+    }
+})
+
 module.exports = {
     memberSchema,
     newsSchema,
     memberRequestSchema,
-    projectsSchema
+    projectsSchema,
+    postSchema
 }
