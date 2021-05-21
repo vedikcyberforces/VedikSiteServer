@@ -79,10 +79,24 @@ API.route('/profile')
     .get((req, res) => {
         ProfileAPI.getProfile(MemberModal, req.query.username).then((val) => { res.send(val) }).catch((err) => { console.error(err) })
     })
-    .post(async (req, res) => {
+    .post( multipartMiddleware, async (req, res) => {
         try {
             if (req.body != null) {
-                ProfileAPI.updateProfile(MemberModal, req.body, req.query.username).then((val) => { res.send(val) }).catch((err) => { console.error(err) })
+                var avatar;
+                if(req.files.file != null)
+                {
+                    blobStorage.createBlockBlobFromLocalFile('profile', req.files.file.name, req.files.file.path, function (err, result, response) {
+                        if (err) {
+    
+                            console.log(err);
+                        }
+                        
+                    });
+
+                    avatar = blobStorage.getUrl('profile', req.files.file.name)
+                    console.log(avatar)
+                }
+                ProfileAPI.updateProfile(MemberModal, req.body, req.query.username, avatar).then((val) => { res.send(val) }).catch((err) => { console.error(err) })
             }
         } catch (err) {
             res.status(400)
@@ -113,15 +127,38 @@ API.route('/projects')
         }
 
     })
-    .post((req, res) => {
+    .post(multipartMiddleware, (req, res) => {
         try {
             if (req.body != null) {
+                var icon, file;
+
+                if(req.files.icon != null) {
+                    blobStorage.createBlockBlobFromLocalFile('projects', req.files.icon.name, req.files.icon.path, function (err, result, response) {
+                        if (err) {
+                            console.log(err);
+                        }
+                        
+                    });
+                }
+
+                if(req.files.file != null) {
+                    blobStorage.createBlockBlobFromLocalFile('projects', req.files.file.name, req.files.file.path, function (err, result, response) {
+                        if (err) {
+                            console.log(err);
+                        }
+                        
+                    });
+                }
+
+                icon = blobStorage.getUrl('projects', req.files.icon.name)
+                file = blobStorage.getUrl('projects', req.files.file.name)
+
                 //To insert the project
                 const project = new projectsModal({
                     name: req.body.name,
                     about: req.body.about,
-                    images: req.body.images,
-                    icon: req.body.icon,
+                    images: file,
+                    icon: icon,
                     developer: req.body.developer,
                     title: req.body.title,
                     time: req.body.time
@@ -169,7 +206,7 @@ API.route('/posts')
     .post((req, res) => {
         try {
             if (req.body != null) {
-                // //To add the post
+                //To add the post
                 const post = new postsModal({
                     title: req.body.title,
                     content: req.body.content,
@@ -220,13 +257,13 @@ API.route('/art')
             if (req.body != null) {
 
                 //storing the art Gallery Image/photos in cloud storage
-                
+
                 blobStorage.createBlockBlobFromLocalFile('artgallery', req.files.file.name, req.files.file.path, function (err, result, response) {
                     if (!err) {
 
                         var image = blobStorage.getUrl('artgallery', req.files.file.name)
                         console.log(image)
-                        
+
                         //To add the art
                         const art = new artModal({
                             image: image,
