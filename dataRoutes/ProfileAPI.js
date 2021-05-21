@@ -1,12 +1,14 @@
-const updateProfile = async (model, body, username) => {
+const updateProfile = async (model, body, username, avatar) => {
     try {
+
+        console.log(avatar)
         await model.findOneAndUpdate({username:username},
             {
                 title:body.title,
                 about: body.about,
                 firstname: body.firstname,
                 lastname: body.lastname,
-                avatar: body.avatar,
+                avatar_url: avatar,
                 tools: body.tools,
             }, (err, object) => {
             if(err)
