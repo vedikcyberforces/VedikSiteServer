@@ -82,7 +82,6 @@ API.route('/profile')
     .post( multipartMiddleware, async (req, res) => {
         try {
             if (req.body != null) {
-                var avatar;
                 if(req.files.file != null)
                 {
                     blobStorage.createBlockBlobFromLocalFile('profile', req.files.file.name, req.files.file.path, function (err, result, response) {
@@ -93,10 +92,10 @@ API.route('/profile')
                         
                     });
 
-                    avatar = blobStorage.getUrl('profile', req.files.file.name)
+                    req.body.avatar = blobStorage.getUrl('profile', req.files.file.name)
                     console.log(avatar)
                 }
-                ProfileAPI.updateProfile(MemberModal, req.body, req.query.username, avatar).then((val) => { res.send(val) }).catch((err) => { console.error(err) })
+                ProfileAPI.updateProfile(MemberModal, req.body, req.query.username).then((val) => { res.send(val) }).catch((err) => { console.error(err) })
             }
         } catch (err) {
             res.status(400)

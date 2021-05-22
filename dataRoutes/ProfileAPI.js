@@ -1,4 +1,4 @@
-const updateProfile = async (model, body, username, avatar) => {
+const updateProfile = async (model, body, username) => {
     try {
 
         console.log(avatar)
@@ -8,7 +8,7 @@ const updateProfile = async (model, body, username, avatar) => {
                 about: body.about,
                 firstname: body.firstname,
                 lastname: body.lastname,
-                avatar_url: avatar,
+                avatar_url: body.avatar,
                 tools: body.tools,
             }, (err, object) => {
             if(err)
